@@ -16,7 +16,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        submodules: true
+        with:
+          submodules: true
 
       - name: industrial_ci
         uses: ros-industrial/industrial_ci@master
