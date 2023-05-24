@@ -14,22 +14,22 @@ find_package(catkin REQUIRED COMPONENTS
   urdf
   eigen_conversions
   roslib
-  message_generation
+  xsens_awinda_ros_msgs
+  # message_generation
 )
 
-# find_package(Eigen3 REQUIRED)
-find_package(Boost REQUIRED)
+# find_package(Boost REQUIRED)
 
-add_message_files(FILES
-  LinkState.msg
-  LinkStateArray.msg
-)
+# add_message_files(FILES
+#   LinkState.msg
+#   LinkStateArray.msg
+# )
 
-generate_messages(
-   DEPENDENCIES
-   std_msgs
-   geometry_msgs
-)
+# generate_messages(
+#    DEPENDENCIES
+#    std_msgs
+#    geometry_msgs
+# )
 
 catkin_package(
   CATKIN_DEPENDS
@@ -41,6 +41,7 @@ catkin_package(
     urdf
     eigen_conversions
     roslib
+    xsens_awinda_ros_msgs
 
   INCLUDE_DIRS 
     include 
