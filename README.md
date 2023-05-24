@@ -1,4 +1,7 @@
 # Repo: xsens_awinda_ros
+
+[![Build Status](https://github.com/hrii-iit/xsens_awinda_ros/actions/workflows/ci.yml/badge.svg)](https://github.com/hrii-iit/xsens_awinda_ros/actions/workflows/ci.yml)
+
 xsens_awinda_ros contains the relevant packages for the sxens software development tools. (alongside with the ROS middleware)
 
 **NOTE**: refer to the dedicated README files of the packages for further information about their use cases.
