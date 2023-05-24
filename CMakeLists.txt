@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   tf2_ros
+  urdf
   eigen_conversions
   roslib
   message_generation
@@ -37,6 +38,7 @@ catkin_package(
     sensor_msgs
     std_msgs
     tf2_ros
+    urdf
     eigen_conversions
     roslib
 
