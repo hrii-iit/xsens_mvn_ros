@@ -1,0 +1,32 @@
+<launch>
+    
+    <arg name="model_name" default="skeleton"/>
+    <arg name="reference_frame" default="world"/>
+
+    <!-- UDP communication arguments -->
+    <arg name="udp_port" default="8001"/>
+
+    <!-- RViz arguments -->
+    <arg name="launch_rviz" default="true"/>
+    <arg name="rviz_config_file" default="$(find hrii_xsens)/rviz/xsens_visualization.rviz"/>
+
+    <!-- Launch the node -->
+    <node name="xsens" pkg="hrii_xsens" type="xsens_client" output="screen">
+        <param name="model_name" value="$(arg model_name)"/>
+        <param name="reference_frame" value="$(arg reference_frame)"/>
+        <param name="udp_port" value="$(arg udp_port)"/>
+    </node>
+  
+    <!-- Launch RViz -->
+    <node if="$(arg launch_rviz)" name="xsens_rviz" pkg="rviz" type="rviz" output="screen" args="-d $(arg rviz_config_file)"/>
+
+    <!-- <arg name="gui" default="True" />
+    <param name="use_gui" value="$(arg gui)"/>
+
+    <param name="robot_description" textfile="$(find hrii_xsens)/urdf/xsens_model.xacro.urdf" />
+    
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> 
+
+    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" /> -->
+
+</launch>

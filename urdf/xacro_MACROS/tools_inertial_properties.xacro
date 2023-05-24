@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!--Tools inertial properties -->
+<!--The masses are expressed in kilograms -->
+<xacro:property name="drill_mass" value="1" />  
+<xacro:property name="drill_ixx" value="1" />
+<xacro:property name="drill_ixy" value="1" />
+<xacro:property name="drill_ixz" value="1" />
+<xacro:property name="drill_iyy" value="1" />
+<xacro:property name="drill_iyz" value="1" />
+<xacro:property name="drill_izz" value="1" />
+
+<xacro:property name="saw_mass" value="1" />  
+<xacro:property name="saw_ixx" value="1" />
+<xacro:property name="saw_ixy" value="1" />
+<xacro:property name="saw_ixz" value="1" />
+<xacro:property name="saw_iyy" value="1" />
+<xacro:property name="saw_iyz" value="1" />
+<xacro:property name="saw_izz" value="1" />
+
+<xacro:property name="hammer_mass" value="1" />  
+<xacro:property name="hammer_ixx" value="1" />
+<xacro:property name="hammer_ixy" value="1" />
+<xacro:property name="hammer_ixz" value="1" />
+<xacro:property name="hammer_iyy" value="1" />
+<xacro:property name="hammer_iyz" value="1" />
+<xacro:property name="hammer_izz" value="1" />
+
+</robot>
