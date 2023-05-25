@@ -6,7 +6,7 @@
 #include <eigen_conversions/eigen_msg.h>
 
 #include <sensor_msgs/JointState.h>
-#include <xsens_awinda_ros/LinkStateArray.h>
+#include <xsens_awinda_ros_msgs/LinkStateArray.h>
 
 int main(int argc, char** argv)
 {
@@ -25,7 +25,7 @@ int main(int argc, char** argv)
 
     // ROS publishers
     ros::Publisher joint_state_publisher = nh.advertise<sensor_msgs::JointState>("joint_states", 10);
-    ros::Publisher link_state_publisher = nh.advertise<xsens_awinda_ros::LinkStateArray>("link_states", 10);
+    ros::Publisher link_state_publisher = nh.advertise<xsens_awinda_ros_msgs::LinkStateArray>("link_states", 10);
     ros::Publisher com_publisher = nh.advertise<geometry_msgs::Point>("com", 10);
 
     boost::shared_ptr<XSensClient> xsens_client_ptr;
@@ -70,7 +70,7 @@ int main(int argc, char** argv)
         }
         
         // Publish link tf and state
-        xsens_awinda_ros::LinkStateArray link_state_msg;
+        xsens_awinda_ros_msgs::LinkStateArray link_state_msg;
         auto links = xsens_client_ptr->getHumanData()->getLinks();
         for (std::map<std::string, hrii::ergonomics::Link>::iterator link_it = links.begin(); link_it != links.end(); link_it++)
         {
@@ -95,7 +95,7 @@ int main(int argc, char** argv)
             if (link_state_publisher.getNumSubscribers() > 0)
             {
                 // Publish link state
-                xsens_awinda_ros::LinkState link_state;
+                xsens_awinda_ros_msgs::LinkState link_state;
                 link_state.header.frame_id = link_it->first;
                 link_state.header.stamp = ros::Time::now();
                 tf::pointEigenToMsg(link_it->second.state.position, link_state.pose.position);
