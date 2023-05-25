@@ -16,9 +16,9 @@ jobs:
 
       - name: Generate Sphinx documentation
         uses: ammaraskar/sphinx-action@master
-          with:
-            docs-folder: "docs/sphinx"
-            build-command: "sphinx-build -b html . _build"
+        with:
+          docs-folder: "docs/sphinx"
+          build-command: "sphinx-build -b html . _build"
 
       - name: Commit documentation changes
         run: |
