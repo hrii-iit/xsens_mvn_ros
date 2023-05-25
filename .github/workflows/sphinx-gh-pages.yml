@@ -19,12 +19,12 @@ jobs:
         uses: ammaraskar/sphinx-action@master
         with:
           docs-folder: "docs/sphinx/source"
-          build-command: "sphinx-build -b html . _build"
+          build-command: "sphinx-build -b html docs/sphinx/source docs/sphinx/build"
 
       - name: Commit documentation changes
         run: |
           git clone https://github.com/your_git/repository.git --branch gh-pages --single-branch gh-pages
-          cp -r docs/_build/html/* gh-pages/
+          cp -r docs/sphinx/build/* gh-pages/
           cd gh-pages
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
