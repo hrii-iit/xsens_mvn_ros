@@ -1,0 +1,9 @@
+# Ignore Doxygen generated documentation
+docs/doxygen/*
+# Except for Doxyfile
+!docs/doxygen/Doxyfile
+
+# Ignore Sphinx generated documentation
+docs/sphinx/*
+# Except for Sphinx source folder
+!docs/sphinx/source
