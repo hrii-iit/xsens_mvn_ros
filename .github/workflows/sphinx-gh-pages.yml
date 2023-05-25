@@ -1,4 +1,4 @@
-name: "Sphinx documentation" 
+name: Sphinx documentation
 
 on:
   push:
@@ -22,19 +22,25 @@ jobs:
           docs-folder: "docs/sphinx/source"
           build-command: "sphinx-build -b html . ../build"
 
-      - name: Commit documentation changes
-        run: |
-          git clone https://github.com/hrii-iit/xsens_awinda_ros.git --branch gh-pages --single-branch gh-pages
-          cp -r docs/sphinx/build/* gh-pages/
-          cd gh-pages
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Update documentation" -a || true
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+      - name: Deploy Github Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: gh-pages
-          directory: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: "docs/sphinx/build"
+
+      # - name: Commit documentation changes
+      #   run: |
+      #     git clone https://github.com/hrii-iit/xsens_awinda_ros.git --branch gh-pages --single-branch gh-pages
+      #     cp -r docs/sphinx/build/* gh-pages/
+      #     cd gh-pages
+      #     git config --local user.email "action@github.com"
+      #     git config --local user.name "GitHub Action"
+      #     git add .
+      #     git commit -m "Update documentation" -a || true
+
+      # - name: Push changes
+      #   uses: ad-m/github-push-action@master
+      #   with:
+      #     branch: gh-pages
+      #     directory: gh-pages
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
