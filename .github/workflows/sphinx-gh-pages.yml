@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - noetic-devel
+      - feature/sphinx-docs
 
 jobs:
   docs:
