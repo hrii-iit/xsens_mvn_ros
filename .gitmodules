@@ -1,0 +1,3 @@
+[submodule "xsens_awinda_ros_msgs"]
+	path = xsens_awinda_ros_msgs
+	url = https://github.com/hrii-iit/xsens_awinda_ros_msgs

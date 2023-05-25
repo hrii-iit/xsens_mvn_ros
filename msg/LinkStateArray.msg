@@ -1,1 +1,0 @@
-xsens_awinda_ros/LinkState[] states
