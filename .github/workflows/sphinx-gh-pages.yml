@@ -18,8 +18,9 @@ jobs:
       - name: Generate Sphinx documentation
         uses: ammaraskar/sphinx-action@master
         with:
+          pre-build-command: "pip install sphinx_rtd_theme"
           docs-folder: "docs/sphinx/source"
-          build-command: "sphinx-build -b html docs/sphinx/source docs/sphinx/build"
+          build-command: "sphinx-build -b html . ../build"
 
       - name: Commit documentation changes
         run: |
