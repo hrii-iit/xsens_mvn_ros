@@ -1,12 +1,22 @@
-Installation
-============
+Usage
+=====
 
 .. _deps_server:
 
-Server
-------
-- Microsoft Windows
-- [MVN Link or Awinda](https://www.xsens.com/products/mtw-awinda)
+Server (Microsoft Windows)
+--------------------------
+
+.. toctree::
+
+    server/installation
+    server/usage
+    build
+    kinematic_chain
+
+Install the MVN Studio 2023 software in you Windows machine (TODO ADD LINK)
+
+Install `MVN Awinda Studio 2023 <https://www.xsens.com/products/mtw-awinda>`_.
+
 
 Client
 ------
