@@ -1,45 +1,51 @@
-# Repo: xsens_awinda_ros
 
-[![Build Status](https://github.com/hrii-iit/xsens_awinda_ros/actions/workflows/ci.yml/badge.svg)](https://github.com/hrii-iit/xsens_awinda_ros/actions/workflows/ci.yml)
+-----------------
+<h1 align="center">xsens_awinda_ros</h1>
 
-xsens_awinda_ros contains the relevant packages for the sxens software development tools. (alongside with the ROS middleware)
+<div align="center">
+    <img src=".github/media/iit_hrii_logo.png" width="300">
+</div>
 
-**NOTE**: refer to the dedicated README files of the packages for further information about their use cases.
+<p align="center">
+<a href="https://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/License-BSD%303--Clause-green.svg" alt="License"/></a>
+<a href="https://hrii-iit.github.io/xsens_awinda_ros/"><img src="https://img.shields.io/badge/docs-online-brightgreen" alt="Documentation"/></a>
+<a href="https://github.com/hrii-iit/xsens_awinda_ros/actions/workflows/ci.yml"><img src="https://github.com/hrii-iit/xsens_awinda_ros/actions/workflows/ci.yml/badge.svg" alt="Build Status"/></a>
+</p>
 
-## Table of Contents
-- [Dependencies](#dependencies)
-    - [Server side](#server-side)
-    - [Client side](#client-side)
-- [Build](#build)
-- [Kinematics chain: indexes and definition](#definitions)
+[**xsens_awinda_ros**](https://github.com/hrii-iit/xsens_awinda_ros) contains the ROS-based packages for the [XSens Awinda Suit](https://www.movella.com/products/wearables/xsens-mtw-awinda) MVN software development tools.
 
-## Dependencies
-### Server side
-- Microsoft Windows
-- [MVN Link or Awinda](https://www.xsens.com/products/mtw-awinda)
+Click [here](https://hrii-iit.github.io/xsens_awinda_ros/) to check the main documentation of the *xsens_awinda_ros* package. 
 
-### Client side
-- GNU/Linux Ubuntu 20.04
-- ROS Noetic
-- Git
+<!-- TODO add Xsens waving -->
+<!-- <div align="center">
+    <img src=".github/media/xsens_awinda_wave.gif">
+</div> -->
 
-## Build
-1- Open the terminal emulator and change the current directory to the **src** directory of **catkin_ws** as follows:
-```
-cd path_to_catkin_ws/src
-```
+## Citation
+Please cite [this paper](https://arxiv.org/404) in your publications if *xsens_awinda_ros* package helps your research.
 
-2- Clone the Git repository:
+    @misc{https://doi.org/TODO,
+    doi = {TODO},
+    url = {https://arxiv.org/abs/TODO},
+    author = {TODO},
+    keywords = {TODO},
+    title = {TODO},
+    publisher = {arXiv},
+    year = {2022},
+    copyright = {arXiv.org perpetual, non-exclusive license}
+    }
 
-```
-git clone git@github.com:hrii-iit/xsens_awinda_ros.git
-# If you use https: git clone https://github.com/hrii-iit/xsens_awinda_ros.git
-```
 
-3- Build the catkin workspace:
+## License
 
-```
-cd path_to_catkin_ws
-catkin_make
-```
-## Kinematics chain: indexes and definition
+
+## Contributors
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://github.com/mleonori"><img src="https://github.com/mleonori.png" width="100px;" alt="Mattia Leonori"/><br /><sub><b>Mattia Leonori<br /></b></sub></a><br /></td>
+     <td align="center"><a href="https://github.com/martalorenz"><img src="https://github.com/martalorenz.png" width="100px;" alt="Marta Lorenzini"/><br /><sub><b>Marta Lorenzini<br /></b></sub></a><br /></td>
+    </tr>
+  </tbody>
+</table>
