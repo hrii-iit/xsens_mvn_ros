@@ -1,9 +1,9 @@
-.. xsens_awinda_ros documentation master file, created by
+.. xsens_mvn_ros documentation master file, created by
    sphinx-quickstart on Sun May 21 18:30:03 2023.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to xsens_awinda_ros's documentation!
+Welcome to xsens_mvn_ros's documentation!
 ============================================
 
 .. toctree::
@@ -24,7 +24,7 @@ Indices and tables
 Contents
 --------
 
-xsens_awinda_ros contains the relevant packages for the sxens software development tools (alongside with the ROS middleware). 
+xsens_mvn_ros contains the relevant packages for the sxens software development tools (alongside with the ROS middleware). 
 
 .. toctree::
 

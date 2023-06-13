@@ -1,4 +1,4 @@
-#include "xsens_awinda_ros/XSensClient.h"
+#include "xsens_mvn_ros/XSensClient.h"
 #include <ros/ros.h>
 
 XSensClient::XSensClient(const int& udp_port) :

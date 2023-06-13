@@ -1,4 +1,4 @@
-#include "xsens_awinda_ros/Socket.h"
+#include "xsens_mvn_ros/Socket.h"
 
 Socket::Socket(IpProtocol protocol) 
 {

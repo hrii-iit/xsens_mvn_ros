@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <package format="2">
 
-    <name>xsens_awinda_ros</name>
+    <name>xsens_mvn_ros</name>
     <version>0.0.1</version>
 
-    <description>The xsens_awinda_ros package</description>
+    <description>The xsens_mvn_ros package</description>
 
     <maintainer email="mattia.leonori@iit.it">Mattia Leonori</maintainer>
     <maintainer email="marta.lorenzini@iit.it">Marta Lorenzini</maintainer>
 
     <license>BSD</license>
 
-    <url>https://github.com/hrii-iit/xsens_awinda_ros</url>
+    <url>https://github.com/hrii-iit/xsens_mvn_ros</url>
     <author email="mattia.leonori@iit.it">Mattia Leonori</author>
 
     <buildtool_depend>catkin</buildtool_depend>
@@ -28,7 +28,7 @@
     <depend>urdf</depend>
     <depend>eigen_conversions</depend>
     <depend>roslib</depend>
-    <depend>xsens_awinda_ros_msgs</depend>
+    <depend>xsens_mvn_ros_msgs</depend>
 
     <export>
     </export>

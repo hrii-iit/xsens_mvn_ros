@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'xsens_awinda_ros'
+project = 'xsens_mvn_ros'
 copyright = '2023, Mattia Leonori'
 author = 'Mattia Leonori'
 release = '0.1.0'

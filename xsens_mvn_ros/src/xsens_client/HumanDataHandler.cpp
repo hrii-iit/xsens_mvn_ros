@@ -1,4 +1,4 @@
-#include "xsens_awinda_ros/HumanDataHandler.h"
+#include "xsens_mvn_ros/HumanDataHandler.h"
 #include <iostream>
 
 namespace hrii {

@@ -4,8 +4,8 @@
 #define MAX_MVN_DATAGRAM_SIZE 5000
 
 #include <boost/thread.hpp>
-#include <xsens_awinda_ros/Socket.h>
-#include <xsens_awinda_ros/HumanDataHandler.h>
+#include <xsens_mvn_ros/Socket.h>
+#include <xsens_mvn_ros/HumanDataHandler.h>
 #include <xsens_SDK/parsermanager.h>
 #include "urdf_parser/urdf_parser.h"
 
