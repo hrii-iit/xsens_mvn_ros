@@ -17,6 +17,7 @@ Install the MVN Studio 2023 software in you Windows machine (TODO ADD LINK)
 
 Install `MVN Awinda Studio 2023 <https://www.xsens.com/products/mtw-awinda>`_.
 
+`MVN User manual <https://www.xsens.com/hubfs/Downloads/usermanual/MVN_User_Manual.pdf>`
 
 Client
 ------
