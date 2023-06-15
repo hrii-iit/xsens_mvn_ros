@@ -1,3 +1,6 @@
 [submodule "xsens_mvn_ros_msgs"]
 	path = xsens_mvn_ros_msgs
 	url = https://github.com/hrii-iit/xsens_mvn_ros_msgs
+[submodule "xsens_mvn_ros/xsens_mvn_sdk"]
+	path = xsens_mvn_ros/xsens_mvn_sdk
+	url = git@github.com:hrii-iit/xsens_mvn_sdk.git

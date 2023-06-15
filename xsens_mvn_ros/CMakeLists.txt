@@ -35,14 +35,13 @@ catkin_package(
 
 include_directories(
     include
+    xsens_mvn_sdk/include
     ${catkin_INCLUDE_DIRS}
 )
 
-## Declare a C++ library
-file(GLOB ${PROJECT_NAME}_SDK_CPP_PATH src/xsens_SDK/*.cpp)
-add_library(${PROJECT_NAME}_SDK SHARED ${${PROJECT_NAME}_SDK_CPP_PATH})
-set_target_properties(${PROJECT_NAME}_SDK PROPERTIES LINKER_LANGUAGE CXX)
+add_subdirectory(xsens_mvn_sdk)
 
+## Declare a C++ library
 add_library(${PROJECT_NAME}_HumanDataHandler SHARED src/xsens_client/HumanDataHandler.cpp)
 add_dependencies(${PROJECT_NAME}_HumanDataHandler ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(${PROJECT_NAME}_HumanDataHandler ${catkin_LIBRARIES})

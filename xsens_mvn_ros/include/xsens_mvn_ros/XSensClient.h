@@ -1,12 +1,12 @@
-#ifndef __HRII_XSENS_CLIENT_H__
-#define __HRII_XSENS_CLIENT_H__
+#ifndef __XSENS_MVN_CLIENT_H__
+#define __XSENS_MVN_CLIENT_H__
 
 #define MAX_MVN_DATAGRAM_SIZE 5000
 
 #include <boost/thread.hpp>
 #include <xsens_mvn_ros/Socket.h>
 #include <xsens_mvn_ros/HumanDataHandler.h>
-#include <xsens_SDK/parsermanager.h>
+#include <xsens_mvn_sdk/parsermanager.h>
 #include "urdf_parser/urdf_parser.h"
 
 class XSensClient
@@ -49,15 +49,15 @@ class XSensClient
                                                 const double& y_axis, 
                                                 const double& z_axis);
         void rotateLink(const std::string& link_name, const Eigen::Quaterniond& quat);
-        std::string jointToUrdf(const std::string& name, const std::string& type, const std::string& axis,
-                        const std::string& xyz, const std::string& rpy, const std::string& child_link,
-                        const std::string& parent_link, const std::string& effort, const std::string& velocity,
-                        const std::string& lower_limit, const std::string& upper_limit);
-        std::string linkToUrdf(const std::string& name, const std::string& mass, const std::string& axis,
-                        const std::string& xyz, const std::string& rpy, const std::string& child_link,
-                        const std::string& parent_link, const std::string& effort, const std::string& velocity,
-                        const std::string& lower_limit, const std::string& upper_limit);
+        // std::string jointToUrdf(const std::string& name, const std::string& type, const std::string& axis,
+        //                 const std::string& xyz, const std::string& rpy, const std::string& child_link,
+        //                 const std::string& parent_link, const std::string& effort, const std::string& velocity,
+        //                 const std::string& lower_limit, const std::string& upper_limit);
+        // std::string linkToUrdf(const std::string& name, const std::string& mass, const std::string& axis,
+        //                 const std::string& xyz, const std::string& rpy, const std::string& child_link,
+        //                 const std::string& parent_link, const std::string& effort, const std::string& velocity,
+        //                 const std::string& lower_limit, const std::string& upper_limit);
 
 };
 
-#endif // __HRII_XSENS_CLIENT_H__
+#endif // __XSENS_MVN_CLIENT_H__
