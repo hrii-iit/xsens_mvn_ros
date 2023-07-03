@@ -12,8 +12,6 @@ TODO mention hand
 
 - [Kinematics chain: indexes and definition](#definitions)
 
-# hrii_xsens_synthesizer
-
 header: 
   seq: 1133
   stamp: 
