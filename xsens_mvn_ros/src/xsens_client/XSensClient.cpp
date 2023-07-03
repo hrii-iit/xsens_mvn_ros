@@ -153,14 +153,6 @@ bool XSensClient::buildHumanModel()
         {
             link_name_list_.push_back(full_link_name_list[xsens_link.segmentId]);
         }
-        //         if (link->visual)
-//         {
-//           assignMaterial(link->visual, model, link->name.c_str());
-//         }
-//         for (const auto& visual : link->visual_array)
-//         {
-//           assignMaterial(visual, model, link->name.c_str());
-//         }
 
         urdf_model_->links_.insert(make_pair(link_name_list_[xsens_link.segmentId], link));
         std::cout << "Successfully added a new link " << xsens_link.segmentId << ": " << link_name_list_[xsens_link.segmentId] << "" << std::endl;
@@ -176,7 +168,6 @@ bool XSensClient::buildHumanModel()
     {
         auto xsens_joint = joint_angles_datagram.getData()[joint_cnt];
         urdf::JointSharedPtr joint(new urdf::Joint);
-        // std::cout << static_cast<int>(xsens_joint.parentSegmentId) << "_" << static_cast<int>(xsens_joint.childSegmentId) << std::endl;
         std::string joint_name = link_name_list_[xsens_joint.parentSegmentId-1] + "_" + link_name_list_[xsens_joint.childSegmentId-1];
         joint_name_list_.push_back(joint_name);
         std::cout << static_cast<int>(xsens_joint.parentSegmentId) << "_" << static_cast<int>(xsens_joint.childSegmentId) << std::endl;
@@ -191,7 +182,6 @@ bool XSensClient::buildHumanModel()
             std::cout << "Successfully added a new joint (" << xsens_joint.parentSegmentId-1 << 
                 " -> " << xsens_joint.childSegmentId-1 << "):" << joint_name << "" << std::endl;
         }
-        
     }
     if (urdf_model_->joints_.empty())
     {
@@ -212,8 +202,8 @@ void XSensClient::updateJointAngles()
     {
         // Update joint angles according to N-pose
         human_data_->setJointAngles("l5_s1",             jointAngleToEigenVector3d(joint_angles->getItem(1, 2), 1, 1, 1));
-        human_data_->setJointAngles("l4_l3",             jointAngleToEigenVector3d(joint_angles->getItem(2, 3), 1, 1, 1));
-        human_data_->setJointAngles("l1_t12",            jointAngleToEigenVector3d(joint_angles->getItem(3, 4), 1, 1, 1));
+        human_data_->setJointAngles("_l3",             jointAngleToEigenVector3d(joint_angles->getItem(2, 3), 1, 1, 1));
+        human_data_->setJointAngles("l3_t12",            jointAngleToEigenVector3d(joint_angles->getItem(3, 4), 1, 1, 1));
         human_data_->setJointAngles("t9_t8",             jointAngleToEigenVector3d(joint_angles->getItem(4, 5), 1, 1, 1));
         human_data_->setJointAngles("t1_c7",             jointAngleToEigenVector3d(joint_angles->getItem(5, 6), 1, 1, 1));
         human_data_->setJointAngles("c1_head",           jointAngleToEigenVector3d(joint_angles->getItem(6, 7), 1, 1, 1));
@@ -388,353 +378,9 @@ hrii::ergonomics::HumanDataHandler::Ptr XSensClient::getHumanData()
     return human_data_;
 }
 
-
-void XSensClient::fromHumanModelToURDF()
-{
-    
-    urdf_str_.append("<?xml version=\"1.0\"?><robot name=\"xsens_model\">");
-    for (std::map<std::string, std::shared_ptr<urdf::Joint>>::iterator joint_it = urdf_model_->joints_.begin(); joint_it != urdf_model_->joints_.end(); joint_it++)
-    {
-        // std::cout << "--- " << std::endl;
-        // std::cout << joint_it->first << "" << std::endl;
-        // std::cout << joint_it->second->name << "" << std::endl;
-        // urdf_str.append(jointToUrdf(joint_it->second->name, "revolute", "0 0 1", 
-                                    // "0 0 0", "0 0 0", "child_link", "parent_link", "0", "10", "0", "10"));
-    }
-    // urdf_str.append(jointToUrdf("root_joint", "revolute", "0 0 1", 
-    //                                 "0 0 0", "0 0 0", "child_link", "parent_link", "0", "10", "0", "10"));
-    urdf_str_.append(linkToUrdf("child_link", "0", "0 0 1", 
-                                    "0 0 0", "0 0 0", "child_link", "parent_link", "0", "10", "0", "10"));
-    // urdf_str.append(linkToUrdf("parent_link", "0", "0 0 1", 
-    //                                 "0 0 0", "0 0 0", "child_link", "parent_link", "0", "10", "0", "10"));
-    urdf_str_.append("</robot>");
-
-}
-
-std::string XSensClient::getURDFString()
-{
-    return urdf_str_;
-}
-
-std::string XSensClient::jointToUrdf(const std::string& name, const std::string& type, const std::string& axis,
-                        const std::string& xyz, const std::string& rpy, const std::string& child_link,
-                        const std::string& parent_link, const std::string& effort, const std::string& velocity,
-                        const std::string& lower_limit, const std::string& upper_limit)
-{
-    std::string joint_urdf = "";
-    joint_urdf.append("<joint name=\""+name + "\" type=\"" + type + "\">");
-    joint_urdf.append("<origin xyz=\"" + xyz + "\" type=\"" + rpy + "\"/>");
-    joint_urdf.append("<axis xyz=\"" + axis + "\"/>");
-    joint_urdf.append("<parent link=\"" + parent_link + "\"/>");
-    joint_urdf.append("<child link=\"" + child_link + "\"/>");
-    joint_urdf.append("<limit effort=\"" + effort + "\" velocity=\"" + velocity + 
-                        " lower=\"" + lower_limit + "\" upper=\"" + upper_limit + "\"/>");
-    joint_urdf.append("</joint>");
-    return joint_urdf;
-}
-
-std::string XSensClient::linkToUrdf(const std::string& name, const std::string& mass, const std::string& axis,
-                        const std::string& xyz, const std::string& rpy, const std::string& child_link,
-                        const std::string& parent_link, const std::string& effort, const std::string& velocity,
-                        const std::string& lower_limit, const std::string& upper_limit)
-{
-    std::string link_urdf = "";
-    link_urdf.append("<link name=\"" + name + "\">");
-    // link_urdf.append("<inertial>");
-    // link_urdf.append("<mass xyz=\"" + mass + "\"/>");
-    // link_urdf.append("</inertial>");
-
-    // link_urdf.append("<origin xyz=\"" + xyz + "\" type=\"" + rpy + "\"/>");
-    // link_urdf.append("<axis xyz=\"" + axis + "\"/>");
-    // link_urdf.append("<parent link=\"" + parent_link + "\"/>");
-    // link_urdf.append("<child link=\"" + child_link + "\"/>");
-    // link_urdf.append("<limit effort=\"" + effort + "\" velocity=\"" + velocity + 
-    //                     " lower=\"" + limit_lower + "\" upper=\"" + limit_upper + "\"/>");
-    link_urdf.append("</link>");
-    return link_urdf;
-}
-
-// <xacro:macro name="m_link" params="name mass origin_xyz origin_rpy ixx ixy ixz iyy iyz izz meshfile meshscale color">
-//     <link name="${name}">
-//       <inertial>
-//         <mass value="${mass}" />
-//         <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
-//         <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}" iyy="${iyy}" iyz="${iyz}" izz="${izz}" />
-//       </inertial>
-//       <collision>
-//         <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
-//         <geometry>
-//           <mesh filename="${meshfile}" scale="${meshscale}"/>
-//         </geometry>
-//       </collision>
-//       <visual>
-//         <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
-//         <geometry>
-//             <mesh filename="${meshfile}" scale="${meshscale}"/>
-
-//         </geometry>
-//         <material name="${color}"/>
-//       </visual>
-
-//     </link>
-//   </xacro:macro>
-  
-//   <xacro:macro name="m_fake_link" params="name">
-//     <link name="${name}">
-//     </link>
-//   </xacro:macro>
-
-//   <xacro:macro name="m_joint" params="name type axis_xyz origin_rpy origin_xyz parent child effort velocity limit_lower limit_upper">
-//     
-//   </xacro:macro>
-
-
-//   for (TiXmlElement* joint_xml = robot_xml->FirstChildElement("joint"); joint_xml; joint_xml = joint_xml->NextSiblingElement("joint"))
-//   {
-//     JointSharedPtr joint;
-//     joint.reset(new Joint);
-
-//     if (parseJoint(*joint, joint_xml))
-//     {
-//       if (model->getJoint(joint->name))
-//       {
-//         CONSOLE_BRIDGE_logError("joint '%s' is not unique.", joint->name.c_str());
-//         model.reset();
-//         return model;
-//       }
-//       else
-//       {
-//         model->joints_.insert(make_pair(joint->name,joint));
-//         CONSOLE_BRIDGE_logDebug("urdfdom: successfully added a new joint '%s'", joint->name.c_str());
-//       }
-//     }
-//     else
-//     {
-//       CONSOLE_BRIDGE_logError("joint xml is not initialized correctly");
-//       model.reset();
-//       return model;
-//     }
-//   }
-
-
-//   // every link has children links and joints, but no parents, so we create a
-//   // local convenience data structure for keeping child->parent relations
-//   std::map<std::string, std::string> parent_link_tree;
-//   parent_link_tree.clear();
-
-//   // building tree: name mapping
-//   try 
-//   {
-//     model->initTree(parent_link_tree);
-//   }
-//   catch(ParseError &e)
-//   {
-//     CONSOLE_BRIDGE_logError("Failed to build tree: %s", e.what());
-//     model.reset();
-//     return model;
-//   }
-
-//   // find the root link
-//   try
-//   {
-//     model->initRoot(parent_link_tree);
-//   }
-//   catch(ParseError &e)
-//   {
-//     CONSOLE_BRIDGE_logError("Failed to find root link: %s", e.what());
-//     model.reset();
-//     return model;
-//   }
-  
-//   return model;
-// }
-    
-
 XSensClient::~XSensClient()
 {
     client_active_ = false;
     data_acquisition_thread_.join();
     std::cout << "~XSensClient()" << std::endl;
 }
-
-// ModelInterfaceSharedPtr  parseURDF(const std::string &xml_string)
-// {
-//   ModelInterfaceSharedPtr model(new ModelInterface);
-//   model->clear();
-
-//   TiXmlDocument xml_doc;
-//   xml_doc.Parse(xml_string.c_str());
-//   if (xml_doc.Error())
-//   {
-//     CONSOLE_BRIDGE_logError(xml_doc.ErrorDesc());
-//     xml_doc.ClearError();
-//     model.reset();
-//     return model;
-//   }
-
-//   TiXmlElement *robot_xml = xml_doc.FirstChildElement("robot");
-//   if (!robot_xml)
-//   {
-//     CONSOLE_BRIDGE_logError("Could not find the 'robot' element in the xml file");
-//     model.reset();
-//     return model;
-//   }
-
-//   // Get robot name
-//   const char *name = robot_xml->Attribute("name");
-//   if (!name)
-//   {
-//     CONSOLE_BRIDGE_logError("No name given for the robot.");
-//     model.reset();
-//     return model;
-//   }
-//   model->name_ = std::string(name);
-
-//   try
-//   {
-//     urdf_export_helpers::URDFVersion version(robot_xml->Attribute("version"));
-//     if (!version.equal(1, 0))
-//     {
-//       throw std::runtime_error("Invalid 'version' specified; only version 1.0 is currently supported");
-//     }
-//   }
-//   catch (const std::runtime_error & err)
-//   {
-//     CONSOLE_BRIDGE_logError(err.what());
-//     model.reset();
-//     return model;
-//   }
-
-//   // Get all Material elements
-//   for (TiXmlElement* material_xml = robot_xml->FirstChildElement("material"); material_xml; material_xml = material_xml->NextSiblingElement("material"))
-//   {
-//     MaterialSharedPtr material;
-//     material.reset(new Material);
-
-//     try {
-//       parseMaterial(*material, material_xml, false); // material needs to be fully defined here
-//       if (model->getMaterial(material->name))
-//       {
-//         CONSOLE_BRIDGE_logError("material '%s' is not unique.", material->name.c_str());
-//         material.reset();
-//         model.reset();
-//         return model;
-//       }
-//       else
-//       {
-//         model->materials_.insert(make_pair(material->name,material));
-//         CONSOLE_BRIDGE_logDebug("urdfdom: successfully added a new material '%s'", material->name.c_str());
-//       }
-//     }
-//     catch (ParseError &/*e*/) {
-//       CONSOLE_BRIDGE_logError("material xml is not initialized correctly");
-//       material.reset();
-//       model.reset();
-//       return model;
-//     }
-//   }
-
-//   // Get all Link elements
-//   for (TiXmlElement* link_xml = robot_xml->FirstChildElement("link"); link_xml; link_xml = link_xml->NextSiblingElement("link"))
-//   {
-//     LinkSharedPtr link;
-//     link.reset(new Link);
-
-//     try {
-//       parseLink(*link, link_xml);
-//       if (model->getLink(link->name))
-//       {
-//         CONSOLE_BRIDGE_logError("link '%s' is not unique.", link->name.c_str());
-//         model.reset();
-//         return model;
-//       }
-//       else
-//       {
-//         // set link visual(s) material
-//         CONSOLE_BRIDGE_logDebug("urdfdom: setting link '%s' material", link->name.c_str());
-//         if (link->visual)
-//         {
-//           assignMaterial(link->visual, model, link->name.c_str());
-//         }
-//         for (const auto& visual : link->visual_array)
-//         {
-//           assignMaterial(visual, model, link->name.c_str());
-//         }
-
-//         model->links_.insert(make_pair(link->name,link));
-//         CONSOLE_BRIDGE_logDebug("urdfdom: successfully added a new link '%s'", link->name.c_str());
-//       }
-//     }
-//     catch (ParseError &/*e*/) {
-//       CONSOLE_BRIDGE_logError("link xml is not initialized correctly");
-//       model.reset();
-//       return model;
-//     }
-//   }
-//   if (model->links_.empty()){
-//     CONSOLE_BRIDGE_logError("No link elements found in urdf file");
-//     model.reset();
-//     return model;
-//   }
-
-//   // Get all Joint elements
-//   for (TiXmlElement* joint_xml = robot_xml->FirstChildElement("joint"); joint_xml; joint_xml = joint_xml->NextSiblingElement("joint"))
-//   {
-//     JointSharedPtr joint;
-//     joint.reset(new Joint);
-
-//     if (parseJoint(*joint, joint_xml))
-//     {
-//       if (model->getJoint(joint->name))
-//       {
-//         CONSOLE_BRIDGE_logError("joint '%s' is not unique.", joint->name.c_str());
-//         model.reset();
-//         return model;
-//       }
-//       else
-//       {
-//         model->joints_.insert(make_pair(joint->name,joint));
-//         CONSOLE_BRIDGE_logDebug("urdfdom: successfully added a new joint '%s'", joint->name.c_str());
-//       }
-//     }
-//     else
-//     {
-//       CONSOLE_BRIDGE_logError("joint xml is not initialized correctly");
-//       model.reset();
-//       return model;
-//     }
-//   }
-
-
-//   // every link has children links and joints, but no parents, so we create a
-//   // local convenience data structure for keeping child->parent relations
-//   std::map<std::string, std::string> parent_link_tree;
-//   parent_link_tree.clear();
-
-//   // building tree: name mapping
-//   try 
-//   {
-//     model->initTree(parent_link_tree);
-//   }
-//   catch(ParseError &e)
-//   {
-//     CONSOLE_BRIDGE_logError("Failed to build tree: %s", e.what());
-//     model.reset();
-//     return model;
-//   }
-
-//   // find the root link
-//   try
-//   {
-//     model->initRoot(parent_link_tree);
-//   }
-//   catch(ParseError &e)
-//   {
-//     CONSOLE_BRIDGE_logError("Failed to find root link: %s", e.what());
-//     model.reset();
-//     return model;
-//   }
-  
-//   return model;
-// }
-    

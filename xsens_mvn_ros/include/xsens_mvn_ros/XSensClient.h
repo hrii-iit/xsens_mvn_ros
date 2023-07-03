@@ -49,15 +49,6 @@ class XSensClient
                                                 const double& y_axis, 
                                                 const double& z_axis);
         void rotateLink(const std::string& link_name, const Eigen::Quaterniond& quat);
-        // std::string jointToUrdf(const std::string& name, const std::string& type, const std::string& axis,
-        //                 const std::string& xyz, const std::string& rpy, const std::string& child_link,
-        //                 const std::string& parent_link, const std::string& effort, const std::string& velocity,
-        //                 const std::string& lower_limit, const std::string& upper_limit);
-        // std::string linkToUrdf(const std::string& name, const std::string& mass, const std::string& axis,
-        //                 const std::string& xyz, const std::string& rpy, const std::string& child_link,
-        //                 const std::string& parent_link, const std::string& effort, const std::string& velocity,
-        //                 const std::string& lower_limit, const std::string& upper_limit);
-
 };
 
 #endif // __XSENS_MVN_CLIENT_H__
