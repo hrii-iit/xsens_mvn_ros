@@ -1,12 +1,11 @@
-#ifndef _HRII_XSENS_HUMAN_DATA_HANDLER_H_
-#define _HRII_XSENS_HUMAN_DATA_HANDLER_H_
+#ifndef _XSENS_MVN_ROS_HUMAN_DATA_HANDLER_H_
+#define _XSENS_MVN_ROS_HUMAN_DATA_HANDLER_H_
 
 #include <string>
 #include <map>
 #include <memory>
 #include <vector>
 
-// #include "hrii_xsens_msgs/XSensJointsStates.h"
 #include <Eigen/Dense>
 
 namespace hrii {
@@ -212,4 +211,4 @@ class HumanDataHandler
 
 } // namespace hrii
 
-#endif //_HRII_XSENS_HUMAN_DATA_HANDLER_H_
+#endif //_XSENS_MVN_ROS_HUMAN_DATA_HANDLER_H_
