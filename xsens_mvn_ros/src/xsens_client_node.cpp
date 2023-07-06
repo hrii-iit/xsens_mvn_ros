@@ -81,7 +81,7 @@ int main(int argc, char** argv)
                 geometry_msgs::TransformStamped transform_stamped;
                 transform_stamped.header.stamp = ros::Time::now();
                 transform_stamped.header.frame_id = reference_frame;
-                transform_stamped.child_frame_id = link_it->first;
+                transform_stamped.child_frame_id = model_name+"_"+link_it->first;
                 transform_stamped.transform.translation.x = link_it->second.state.position[0];
                 transform_stamped.transform.translation.y = link_it->second.state.position[1];
                 transform_stamped.transform.translation.z = link_it->second.state.position[2];
