@@ -152,19 +152,19 @@ class HumanDataHandler
          */
         bool getLink(const std::string& link_name, hrii::ergonomics::Link& link);
 
-        /**
-         * @brief Get the link name list;
-         * 
-         * @return std::vector<std::string>: Getting link name list
-         */
-        std::vector<std::string> getLinkNames();
+        // /**
+        //  * @brief Get the link name list;
+        //  * 
+        //  * @return std::vector<std::string>: Getting link name list
+        //  */
+        // std::vector<std::string> getLinkNames();
 
-        /**
-         * @brief Get the joint name list;
-         * 
-         * @return std::vector<std::string>: Getting joint name list
-         */
-        std::vector<std::string> getJointNames();
+        // /**
+        //  * @brief Get the joint name list;
+        //  * 
+        //  * @return std::vector<std::string>: Getting joint name list
+        //  */
+        // std::vector<std::string> getJointNames();
 
         /**
          * @brief Get the link map;

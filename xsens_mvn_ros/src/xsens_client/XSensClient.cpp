@@ -1,5 +1,5 @@
 #include "xsens_mvn_ros/XSensClient.h"
-#include <ros/ros.h>
+#include "xsens_mvn_ros/XSensModel.h"
 
 XSensClient::XSensClient(const int& udp_port) :
     udp_port_(udp_port),
@@ -8,9 +8,6 @@ XSensClient::XSensClient(const int& udp_port) :
 
 bool XSensClient::init()
 {
-    // Initialize human data model
-    human_data_ = std::make_shared<hrii::ergonomics::HumanDataHandler>();
-
     // Initialize UDP communication
     udp_socket_ = boost::make_shared<Socket>(IP_UDP);
     if(!udp_socket_->bind(udp_port_))
@@ -33,9 +30,9 @@ bool XSensClient::init()
 
 void XSensClient::dataAcquisitionCallback()
 {
-    std::cout << "Xsens client start reading." << std::endl << std::endl;
+    std::cout << "XSens client start reading." << std::endl << std::endl;
     
-    if (!buildHumanModel())
+    if (!buildXSensModel())
     {
         std::cerr << "Failure building human model." << std::endl;
         client_active_ = false;
@@ -45,8 +42,6 @@ void XSensClient::dataAcquisitionCallback()
         std::cout << "Human model built." << std::endl;
         client_active_ = true;
     }
-
-    // fromHumanModelToURDF();
 
     while (client_active_)
     {
@@ -75,124 +70,94 @@ bool XSensClient::readData()
     return false;
 }
 
-bool XSensClient::buildHumanModel()
+bool XSensClient::buildXSensModel()
 {
+    // Initialize human data handler
+    human_data_ = std::make_shared<hrii::ergonomics::HumanDataHandler>();
     link_name_list_.clear();
-    std::vector<std::string> full_link_name_list;
-    full_link_name_list.clear();
-    full_link_name_list.push_back("pelvis");
-    full_link_name_list.push_back("l5");
-    full_link_name_list.push_back("l3");
-    full_link_name_list.push_back("t12");
-    full_link_name_list.push_back("t8");
-    full_link_name_list.push_back("neck");
-    full_link_name_list.push_back("head");
-    full_link_name_list.push_back("right_shoulder");
-    full_link_name_list.push_back("right_upper_arm");
-    full_link_name_list.push_back("right_forearm");
-    full_link_name_list.push_back("right_hand");
-    full_link_name_list.push_back("left_shoulder");
-    full_link_name_list.push_back("left_upper_arm");
-    full_link_name_list.push_back("left_forearm");
-    full_link_name_list.push_back("left_hand");
-    full_link_name_list.push_back("right_upper_leg");
-    full_link_name_list.push_back("right_lower_leg");
-    full_link_name_list.push_back("right_foot");
-    full_link_name_list.push_back("right_toe");
-    full_link_name_list.push_back("left_upper_leg");
-    full_link_name_list.push_back("left_lower_leg");
-    full_link_name_list.push_back("left_foot");
-    full_link_name_list.push_back("left_toe");
-    full_link_name_list.push_back("generic_link");
-
     joint_name_list_.clear();
 
-    QuaternionDatagram quaternion_datagram;
-    std::cout << "Waiting for quaternion datagram received..." << std::endl;
-    while (quaternion_datagram.getData().size() == 0)
-    {
-        if(!readData()) return false;
-        if (parser_manager_.getQuaternionDatagram() != NULL)
-            quaternion_datagram = *(parser_manager_.getQuaternionDatagram());
-    }
-    std::cout << "Quaternion datagram received." << std::endl;
+    XSensModelNames xsens_model_names;
 
-    std::cout << "Waiting for joint angles..." << std::endl;
-    JointAnglesDatagram joint_angles_datagram;
-    while (joint_angles_datagram.getData().size() == 0)
-    {
-        if(!readData()) return false;
-        if (parser_manager_.getJointAnglesDatagram() != NULL)
-            joint_angles_datagram = *(parser_manager_.getJointAnglesDatagram());
-    }
-    std::cout << "Joint angles received." << std::endl;
-
-    urdf_model_ = std::make_shared<urdf::ModelInterface>();
-    urdf_model_->clear();
-
-    // Get human model name
-    urdf_model_->name_ = "skeleton";
-
-    // Set material
-    urdf::MaterialSharedPtr material(new urdf::Material);
-
-    urdf_model_->materials_.insert(make_pair(material->name,material));
+    auto quaternion_datagram = waitForQuaternionDatagram();
+    auto joint_angles_datagram = waitForJointAnglesDatagram();
 
     // Get links
-    for (int link_cnt = 0; link_cnt < quaternion_datagram.getData().size(); link_cnt++)
+    std::cout << "Available links: " << quaternion_datagram.getData().size() << std::endl;
+    for (auto xsens_link: quaternion_datagram.getData())
     {
-        auto xsens_link = quaternion_datagram.getItem(link_cnt);
-        urdf::LinkSharedPtr link(new urdf::Link);
-        if (urdf_model_->getLink(full_link_name_list[xsens_link.segmentId]))
+        if(!human_data_->setLink(xsens_model_names.links[xsens_link.segmentId], hrii::ergonomics::Link(xsens_model_names.links[xsens_link.segmentId])))
         {
-            std::cerr << "Link " << full_link_name_list[xsens_link.segmentId] << " is not unique." << std::endl;
-
+            std::cerr << "Error inserting link " << xsens_model_names.links[xsens_link.segmentId] << ". Exiting...";
             return false;
         }
         else
         {
-            link_name_list_.push_back(full_link_name_list[xsens_link.segmentId]);
+            link_name_list_.push_back(xsens_model_names.links[xsens_link.segmentId]);
         }
-
-        urdf_model_->links_.insert(make_pair(link_name_list_[xsens_link.segmentId], link));
-        std::cout << "Successfully added a new link " << xsens_link.segmentId << ": " << link_name_list_[xsens_link.segmentId] << "" << std::endl;
     }
-    if (urdf_model_->links_.empty())
+    if (human_data_->getLinks().size() == 0)
     {
         std::cerr << "No link elements found." << std::endl;
         return false;
     }
 
-    // Get all joints
-    for (int joint_cnt = 0; joint_cnt < joint_angles_datagram.getData().size(); joint_cnt++)
+    std::cout << "Available joints: " << joint_angles_datagram.getData().size() << std::endl;
+    for (size_t joint_cnt = 0; joint_cnt < joint_angles_datagram.getData().size(); joint_cnt++)
     {
         auto xsens_joint = joint_angles_datagram.getData()[joint_cnt];
-        urdf::JointSharedPtr joint(new urdf::Joint);
-        std::string joint_name = link_name_list_[xsens_joint.parentSegmentId-1] + "_" + link_name_list_[xsens_joint.childSegmentId-1];
-        joint_name_list_.push_back(joint_name);
-        std::cout << static_cast<int>(xsens_joint.parentSegmentId) << "_" << static_cast<int>(xsens_joint.childSegmentId) << std::endl;
-        if (urdf_model_->getJoint(joint_name))
+        std::cout << joint_cnt << ") " << link_name_list_[xsens_joint.parentSegmentId-1] << "(" << xsens_joint.parentSegmentId-1 << ") -> " << 
+                                          link_name_list_[xsens_joint.childSegmentId-1] << "(" << xsens_joint.childSegmentId-1 << ")" << std::endl; 
+        std::cout << xsens_model_names.joints[joint_cnt] << std::endl;
+        if(!human_data_->setJoint(xsens_model_names.joints[joint_cnt], hrii::ergonomics::Joint(xsens_model_names.joints[joint_cnt])))
         {
-            std::cout << "Joint " << joint_name << " is not unique." << std::endl;
-            // return false;
+            std::cerr << "Error inserting joint " << xsens_model_names.joints[joint_cnt] << ". Exiting...";
+            return false;
         }
         else
-        {   
-            urdf_model_->joints_.insert(make_pair(joint_name, joint));
-            std::cout << "Successfully added a new joint (" << xsens_joint.parentSegmentId-1 << 
-                " -> " << xsens_joint.childSegmentId-1 << "):" << joint_name << "" << std::endl;
+        {
+            joint_name_list_.push_back(xsens_model_names.joints[joint_cnt]);
         }
     }
-    if (urdf_model_->joints_.empty())
+    if (human_data_->getJoints().size() == 0)
     {
         std::cerr << "No joint elements found." << std::endl;
         return false;
     }
 
-    if (!human_data_->init(link_name_list_, joint_name_list_))
-        return false;
-
     return true;
+}
+
+QuaternionDatagram XSensClient::waitForQuaternionDatagram()
+{
+    std::cout << "Waiting for quaternion datagram received..." << std::endl;
+    QuaternionDatagram quaternion_datagram;
+    while (parser_manager_.getQuaternionDatagram() == NULL)
+    {
+        if(!readData()) return QuaternionDatagram();
+        if (parser_manager_.getQuaternionDatagram() != NULL)
+        {
+            std::cout << "Quaternion datagram received." << std::endl;
+            quaternion_datagram = *(parser_manager_.getQuaternionDatagram());
+        }
+    }
+    return quaternion_datagram;
+}
+
+JointAnglesDatagram XSensClient::waitForJointAnglesDatagram()
+{
+    std::cout << "Waiting for joint angles..." << std::endl;
+    JointAnglesDatagram joint_angles_datagram;
+    while (parser_manager_.getJointAnglesDatagram() == NULL)
+    {
+        if(!readData()) return JointAnglesDatagram();
+        if (parser_manager_.getJointAnglesDatagram() != NULL)
+        {
+            std::cout << "Joint angles datagram received." << std::endl;
+            joint_angles_datagram = *(parser_manager_.getJointAnglesDatagram());
+        }
+    }
+    return joint_angles_datagram;
 }
     
 void XSensClient::updateJointAngles()
@@ -202,7 +167,7 @@ void XSensClient::updateJointAngles()
     {
         // Update joint angles according to N-pose
         human_data_->setJointAngles("l5_s1",             jointAngleToEigenVector3d(joint_angles->getItem(1, 2), 1, 1, 1));
-        human_data_->setJointAngles("_l3",             jointAngleToEigenVector3d(joint_angles->getItem(2, 3), 1, 1, 1));
+        human_data_->setJointAngles("_l3",               jointAngleToEigenVector3d(joint_angles->getItem(2, 3), 1, 1, 1));
         human_data_->setJointAngles("l3_t12",            jointAngleToEigenVector3d(joint_angles->getItem(3, 4), 1, 1, 1));
         human_data_->setJointAngles("t9_t8",             jointAngleToEigenVector3d(joint_angles->getItem(4, 5), 1, 1, 1));
         human_data_->setJointAngles("t1_c7",             jointAngleToEigenVector3d(joint_angles->getItem(5, 6), 1, 1, 1));
@@ -240,7 +205,7 @@ void XSensClient::updateLinkPoses()
     auto quaternion_datagram = parser_manager_.getQuaternionDatagram();
     if(quaternion_datagram != NULL)
     {
-        std::vector<std::string> link_names = human_data_->getLinkNames();
+        // std::vector<std::string> link_names = human_data_->getLinkNames();
         // if (quaternion_datagram->getData().size() != link_names.size())
         // {
         //     std::cerr << "Quaternion datagram returns an array of " << quaternion_datagram->getData().size() << 
@@ -248,13 +213,13 @@ void XSensClient::updateLinkPoses()
         //     return;
         // }
 
-        for (int link_cnt = 0; link_cnt < link_names.size(); link_cnt++)
+        for (int link_cnt = 0; link_cnt < link_name_list_.size(); link_cnt++)
         {
             auto link_pose = quaternion_datagram->getItem(link_cnt+1);
             Eigen::Vector3d link_pos;
             link_pos << link_pose.sensorPos[0], link_pose.sensorPos[1], link_pose.sensorPos[2];
             Eigen::Quaterniond link_orient(link_pose.quatRotation[0], link_pose.quatRotation[1], link_pose.quatRotation[2], link_pose.quatRotation[3]);
-            human_data_->setLinkPose(link_names[link_cnt], link_pos, link_orient);
+            human_data_->setLinkPose(link_name_list_[link_cnt], link_pos, link_orient);
         }
 
         Eigen::Quaterniond quat_x_rot_90neg(0.7071068, -0.7071068, 0.0, 0.0);
@@ -284,29 +249,29 @@ void XSensClient::updateLinkLinearTwists()
 
     if (linear_segment_kinematics_datagram != NULL)
     {
-        std::vector<std::string> link_names = human_data_->getLinkNames();
+        // std::vector<std::string> link_names = human_data_->getLinkNames();
 
-        for (int link_cnt = 0; link_cnt < link_names.size(); link_cnt++)
+        for (int link_cnt = 0; link_cnt < link_name_list_.size(); link_cnt++)
         {
             // Get linear kinematics from datagram structure
             auto link_linear_kinematics = linear_segment_kinematics_datagram->getItem(link_cnt+1);
 
             // Get link
             hrii::ergonomics::Link link;
-            if (!human_data_->getLink(link_names[link_cnt], link))
+            if (!human_data_->getLink(link_name_list_[link_cnt], link))
             {
-                std::cerr << "Link " << link_names[link_cnt] << "not found" << std::endl;
+                std::cerr << "Link " << link_name_list_[link_cnt] << "not found" << std::endl;
             }
             else
             {
-                link.state.velocity.linear <<   link_linear_kinematics.velocity[0], 
-                                            link_linear_kinematics.velocity[1], 
-                                            link_linear_kinematics.velocity[2];
-                link.state.acceleration.linear << link_linear_kinematics.acceleration[0], 
+                link.state.velocity.linear << link_linear_kinematics.velocity[0], 
+                                              link_linear_kinematics.velocity[1], 
+                                              link_linear_kinematics.velocity[2];
+                link.state.acceleration.linear <<   link_linear_kinematics.acceleration[0], 
                                                     link_linear_kinematics.acceleration[1], 
                                                     link_linear_kinematics.acceleration[2];
         
-                human_data_->setLinkState(link_names[link_cnt], link.state);
+                human_data_->setLinkState(link_name_list_[link_cnt], link.state);
             }
         }
     }
@@ -318,18 +283,18 @@ void XSensClient::updateLinkAngularTwists()
 
     if (angular_segment_kinematics_datagram != NULL)
     {
-        std::vector<std::string> link_names = human_data_->getLinkNames();
+        // std::vector<std::string> link_names = human_data_->getLinkNames();
 
-        for (int link_cnt = 0; link_cnt < link_names.size(); link_cnt++)
+        for (int link_cnt = 0; link_cnt < link_name_list_.size(); link_cnt++)
         {
             // Get angular kinematics from datagram structure
             auto link_angular_kinematics = angular_segment_kinematics_datagram->getItem(link_cnt+1);
 
             // Get link
             hrii::ergonomics::Link link;
-            if (!human_data_->getLink(link_names[link_cnt], link))
+            if (!human_data_->getLink(link_name_list_[link_cnt], link))
             {
-                std::cerr << "Link " << link_names[link_cnt] << "not found" << std::endl;
+                std::cerr << "Link " << link_name_list_[link_cnt] << "not found" << std::endl;
             }
             else
             {
@@ -340,7 +305,7 @@ void XSensClient::updateLinkAngularTwists()
                                                     link_angular_kinematics.angularAccel[1]*M_PI/180, 
                                                     link_angular_kinematics.angularAccel[2]*M_PI/180;
 
-                human_data_->setLinkState(link_names[link_cnt], link.state);
+                human_data_->setLinkState(link_name_list_[link_cnt], link.state);
             }
         }
     }
@@ -377,6 +342,8 @@ hrii::ergonomics::HumanDataHandler::Ptr XSensClient::getHumanData()
 {
     return human_data_;
 }
+
+
 
 XSensClient::~XSensClient()
 {
