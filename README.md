@@ -29,6 +29,8 @@ Please cite [this paper](https://arxiv.org/404) in your publications if *xsens_m
     title = {The Bridge between Xsens Motion-Capture and Robot Operating System (ROS): Enabling Robots with Online 3D Human Motion Tracking},
     journal={arXiv preprint arXiv:2306.17738},
     year = {2023},
+    doi = {10.48550/arXiv.2306.17738},
+    url = {https://arxiv.org/abs/2306.17738}
     }
 
 
