@@ -24,15 +24,11 @@ Click [here](https://hrii-iit.github.io/xsens_mvn_ros/) to check the main docume
 ## Citation
 Please cite [this paper](https://arxiv.org/404) in your publications if *xsens_mvn_ros* package helps your research.
 
-    @misc{https://doi.org/TODO,
-    doi = {TODO},
-    url = {https://arxiv.org/abs/TODO},
-    author = {TODO},
-    keywords = {TODO},
-    title = {TODO},
-    publisher = {arXiv},
-    year = {2022},
-    copyright = {arXiv.org perpetual, non-exclusive license}
+    @article{leonori2023bridge,
+    author = {Leonori, Mattia and Lorenzini, Marta and Fortini, Luca and Gandarias, Juan M and Ajoudani, Arash},
+    title = {The Bridge between Xsens Motion-Capture and Robot Operating System (ROS): Enabling Robots with Online 3D Human Motion Tracking},
+    journal={arXiv preprint arXiv:2306.17738},
+    year = {2023},
     }
 
 
