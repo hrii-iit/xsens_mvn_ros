@@ -132,15 +132,15 @@ bool HumanDataHandler::getLink(const std::string& link_name, hrii::ergonomics::L
     return true;
 }
 
-std::vector<std::string> HumanDataHandler::getLinkNames()
-{
-    return link_name_list_;
-}
+// std::vector<std::string> HumanDataHandler::getLinkNames()
+// {
+//     return link_name_list_;
+// }
 
-std::vector<std::string> HumanDataHandler::getJointNames()
-{
-    return joint_name_list_;
-}
+// std::vector<std::string> HumanDataHandler::getJointNames()
+// {
+//     return joint_name_list_;
+// }
 
 std::map<std::string, hrii::ergonomics::Link> HumanDataHandler::getLinks()
 {

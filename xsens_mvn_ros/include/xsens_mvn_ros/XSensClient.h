@@ -7,7 +7,7 @@
 #include <xsens_mvn_ros/Socket.h>
 #include <xsens_mvn_ros/HumanDataHandler.h>
 #include <xsens_mvn_sdk/parsermanager.h>
-#include "urdf_parser/urdf_parser.h"
+// #include "urdf_parser/urdf_parser.h"
 
 class XSensClient
 {
@@ -25,19 +25,18 @@ class XSensClient
         boost::shared_ptr<Socket> udp_socket_;
         ParserManager parser_manager_;
         hrii::ergonomics::HumanDataHandler::Ptr human_data_;
-        urdf::ModelInterfaceSharedPtr urdf_model_;
         std::vector<std::string> link_name_list_, joint_name_list_;
-        std::string urdf_str_;
         
-        char data_buffer_[MAX_MVN_DATAGRAM_SIZE];
-
         boost::thread data_acquisition_thread_;
         void dataAcquisitionCallback();
+        char data_buffer_[MAX_MVN_DATAGRAM_SIZE];
         bool client_active_;
+        
+        bool buildXSensModel();
+        QuaternionDatagram waitForQuaternionDatagram();
+        JointAnglesDatagram waitForJointAnglesDatagram();
 
         bool readData();
-        bool buildHumanModel();
-        void fromHumanModelToURDF();
         void updateJointAngles();
         void updateLinkPoses();
         void updateLinkLinearTwists();
