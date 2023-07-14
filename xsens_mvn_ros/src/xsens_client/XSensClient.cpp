@@ -167,8 +167,8 @@ void XSensClient::updateJointAngles()
     {
         // Update joint angles according to N-pose
         human_data_->setJointAngles("l5_s1",             jointAngleToEigenVector3d(joint_angles->getItem(1, 2), 1, 1, 1));
-        human_data_->setJointAngles("_l3",               jointAngleToEigenVector3d(joint_angles->getItem(2, 3), 1, 1, 1));
-        human_data_->setJointAngles("l3_t12",            jointAngleToEigenVector3d(joint_angles->getItem(3, 4), 1, 1, 1));
+        human_data_->setJointAngles("l4_l3",             jointAngleToEigenVector3d(joint_angles->getItem(2, 3), 1, 1, 1));
+        human_data_->setJointAngles("l1_t12",            jointAngleToEigenVector3d(joint_angles->getItem(3, 4), 1, 1, 1));
         human_data_->setJointAngles("t9_t8",             jointAngleToEigenVector3d(joint_angles->getItem(4, 5), 1, 1, 1));
         human_data_->setJointAngles("t1_c7",             jointAngleToEigenVector3d(joint_angles->getItem(5, 6), 1, 1, 1));
         human_data_->setJointAngles("c1_head",           jointAngleToEigenVector3d(joint_angles->getItem(6, 7), 1, 1, 1));
@@ -183,11 +183,11 @@ void XSensClient::updateJointAngles()
         human_data_->setJointAngles("right_hip",         jointAngleToEigenVector3d(joint_angles->getItem(1, 16), -1, 1, -1));
         human_data_->setJointAngles("right_knee",        jointAngleToEigenVector3d(joint_angles->getItem(16, 17), -1, 1, 1));
         human_data_->setJointAngles("right_ankle",       jointAngleToEigenVector3d(joint_angles->getItem(17, 18), -1, 1, -1));
-        human_data_->setJointAngles("right_ball_foot",   jointAngleToEigenVector3d(joint_angles->getItem(18, 19), -1, 1, -1));
+        human_data_->setJointAngles("right_ballfoot",    jointAngleToEigenVector3d(joint_angles->getItem(18, 19), -1, 1, -1));
         human_data_->setJointAngles("left_hip",          jointAngleToEigenVector3d(joint_angles->getItem(1, 20), 1, -1, -1));
         human_data_->setJointAngles("left_knee",         jointAngleToEigenVector3d(joint_angles->getItem(20, 21), 1, -1, 1));
         human_data_->setJointAngles("left_ankle",        jointAngleToEigenVector3d(joint_angles->getItem(21, 22), 1, -1, -1));
-        human_data_->setJointAngles("left_ball_foot",    jointAngleToEigenVector3d(joint_angles->getItem(22, 23), 1, -1, -1));
+        human_data_->setJointAngles("left_ballfoot",     jointAngleToEigenVector3d(joint_angles->getItem(22, 23), 1, -1, -1));
 
         // Add +90° to elbows angle
         hrii::ergonomics::Joint elbow_joint;
