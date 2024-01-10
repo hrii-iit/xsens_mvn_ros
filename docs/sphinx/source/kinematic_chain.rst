@@ -8,7 +8,7 @@ Kinematics chain
 Indexes
 -------
 
-TODO mention hand
+TODO mention hand joints and links
 
 - [Kinematics chain: indexes and definition](#definitions)
 
@@ -81,28 +81,28 @@ Joint indexes and names:
   - 65) <prefix>t9_t8_z
 
 Link indexes and names:
-  - 0) base_link
-  - 1) pelvis
-  - 2) l5
-  - 3) l3
-  - 4) t12
-  - 5) t8
-  - 6) neck
-  - 7) head
-  - 8) right_shoulder
-  - 9) right_upper_arm
-  - 10) right_forearm
-  - 11) right_hand
-  - 12) left_shoulder
-  - 13) left_upper_arm
-  - 14) left_forearm
-  - 15) left_hand
-  - 16) right_upper_leg
-  - 17) right_lower_leg
-  - 18) right_foot
-  - 19) right_toe
-  - 20) left_upper_leg
-  - 21) left_lower_leg
-  - 22) left_foot
-  - 23) left_toe
-  - 24) generic_link
+  - 0) <prefix>base_link
+  - 1) <prefix>pelvis
+  - 2) <prefix>l5
+  - 3) <prefix>l3
+  - 4) <prefix>t12
+  - 5) <prefix>t8
+  - 6) <prefix>neck
+  - 7) <prefix>head
+  - 8) <prefix>right_shoulder
+  - 9) <prefix>right_upper_arm
+  - 10) <prefix>right_forearm
+  - 11) <prefix>right_hand
+  - 12) <prefix>left_shoulder
+  - 13) <prefix>left_upper_arm
+  - 14) <prefix>left_forearm
+  - 15) <prefix>left_hand
+  - 16) <prefix>right_upper_leg
+  - 17) <prefix>right_lower_leg
+  - 18) <prefix>right_foot
+  - 19) <prefix>right_toe
+  - 20) <prefix>left_upper_leg
+  - 21) <prefix>left_lower_leg
+  - 22) <prefix>left_foot
+  - 23) <prefix>left_toe
+  - 24) <prefix>generic_link
