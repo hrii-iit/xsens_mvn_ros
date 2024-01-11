@@ -19,7 +19,7 @@ jobs:
         with:
           pre-build-command: "pip install sphinx_rtd_theme"
           docs-folder: "docs/sphinx/source"
-          build-command: "sphinx-build -b html . ../build"
+          build-command: "sphinx-build -b html . ../build -w /tmp/sphinx-log"
 
       - name: Deploy documentation in Github Pages
         uses: peaceiris/actions-gh-pages@v3
