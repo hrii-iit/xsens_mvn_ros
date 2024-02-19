@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'xsens_mvn_ros'
-copyright = '2023, Mattia Leonori'
+copyright = '2024, Mattia Leonori'
 author = 'Mattia Leonori'
 release = '0.1.0'
 
