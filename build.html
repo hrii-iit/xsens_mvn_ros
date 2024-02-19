@@ -1,18 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build &mdash; xsens_mvn_ros 0.1.0 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <title>Build &mdash; xsens_mvn_ros 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=2389946f"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -86,20 +91,38 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="build">
-<h1>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="create-a-catkin-workspace">
-<h2>Create a Catkin workspace<a class="headerlink" href="#create-a-catkin-workspace" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic simple">
-<li><p>Step 1. mkdir -p path_to_catkin_ws/src</p></li>
-<li><p>Step 2. cd path_to_catkin_ws/src</p></li>
-<li><p>Step 3. git clone <a class="reference external" href="https://github.com/hrii-iit/xsens_mvn_ros.git">https://github.com/hrii-iit/xsens_mvn_ros.git</a> –recursive</p></li>
+  <section id="build">
+<h1>Build<a class="headerlink" href="#build" title="Permalink to this heading"></a></h1>
+<section id="create-a-catkin-workspace">
+<h2>Create a Catkin workspace<a class="headerlink" href="#create-a-catkin-workspace" title="Permalink to this heading"></a></h2>
+<p>Execute the following steps to create a catkin workspace, clone the xsens_mvn_ros ROS package and compile it.</p>
+<ol class="arabic">
+<li><p>Create a catkin workspace and change directory to the source code:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>path_to_catkin_ws/src
+<span class="nb">cd</span><span class="w"> </span>path_to_catkin_ws/src
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Clone the xsens_mvn_ros repository:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/hrii-iit/xsens_mvn_ros.git<span class="w"> </span>--recursive
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Build your catkin workspace</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>path_to_catkin_ws
+catkin<span class="w"> </span>build
+</pre></div>
+</div>
+</div></blockquote>
+</li>
 </ol>
-<p>#. Step 4. Build your catkin workspace
-cd ..
-catkin build</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
