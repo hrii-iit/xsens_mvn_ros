@@ -3,7 +3,8 @@ name: Sphinx documentation
 on:
   push:
     branches:
-      - noetic-devel
+      # - noetic-devel
+      - fix-documentation
 
 jobs:
   docs:
@@ -19,7 +20,7 @@ jobs:
         with:
           pre-build-command: "pip install sphinx_rtd_theme"
           docs-folder: "docs/sphinx/source"
-          build-command: "sphinx-build -b html . ../build -w /tmp/sphinx-log"
+          build-command: "sphinx-build -b html . ../build"
 
       - name: Deploy documentation in Github Pages
         uses: peaceiris/actions-gh-pages@v3
