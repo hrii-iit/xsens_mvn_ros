@@ -17,9 +17,9 @@ jobs:
       - name: Generate Sphinx documentation
         uses: ammaraskar/sphinx-action@master
         with:
-          pre-build-command: "pip install sphinx_rtd_theme"
+          pre-build-command: "pip install sphinx_rtd_theme docutils==0.18.1"
           docs-folder: "docs/sphinx/source"
-          build-command: "sphinx-build -b html . ../build -w /tmp/sphinx-log"
+          build-command: "sphinx-build -b html . ../build"
 
       - name: Deploy documentation in Github Pages
         uses: peaceiris/actions-gh-pages@v3
