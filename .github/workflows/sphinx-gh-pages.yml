@@ -18,6 +18,7 @@ jobs:
       - name: Generate Sphinx documentation
         uses: ammaraskar/sphinx-action@master
         with:
+          sphinx-version: "2.4.4"
           pre-build-command: "pip install sphinx_rtd_theme"
           docs-folder: "docs/sphinx/source"
           build-command: "sphinx-build -b html . ../build"
