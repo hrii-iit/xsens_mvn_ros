@@ -3,8 +3,7 @@ name: Sphinx documentation
 on:
   push:
     branches:
-      # - noetic-devel
-      - fix-documentation
+      - noetic-devel
 
 jobs:
   docs:
