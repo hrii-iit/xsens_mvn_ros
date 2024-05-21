@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build &mdash; xsens_mvn_ros 0.1.0 documentation</title>
+  <title>Usage &mdash; xsens_mvn_ros 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -21,8 +21,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Kinematic Chain" href="kinematic_chain.html" />
-    <link rel="prev" title="Usage" href="server/usage.html" /> 
+    <link rel="next" title="Skeleton indexes and names" href="kinematic_chain.html" />
+    <link rel="prev" title="Setup" href="setup.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,25 +45,13 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="installation.html">Usage</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="installation.html#server-microsoft-windows">Server (Microsoft Windows)</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="server/installation.html">Server Installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="server/usage.html">Usage</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Build</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#create-a-catkin-workspace">Create a Catkin workspace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#server-microsoft-windows-computer">Server (Microsoft Windows computer)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#client-linux-ubuntu-computer">Client (Linux Ubuntu computer)</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="kinematic_chain.html">Kinematic Chain</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#client">Client</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Build</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#create-a-catkin-workspace">Create a Catkin workspace</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="kinematic_chain.html">Kinematic Chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinematic_chain.html">Skeleton indexes and names</a></li>
 </ul>
 
         </div>
@@ -80,10 +68,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="installation.html">Usage</a></li>
-      <li class="breadcrumb-item active">Build</li>
+      <li class="breadcrumb-item active">Usage</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/build.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -91,31 +78,28 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="build">
-<h1>Build<a class="headerlink" href="#build" title="Permalink to this heading"></a></h1>
-<section id="create-a-catkin-workspace">
-<h2>Create a Catkin workspace<a class="headerlink" href="#create-a-catkin-workspace" title="Permalink to this heading"></a></h2>
-<p>Execute the following steps to create a catkin workspace, clone the xsens_mvn_ros ROS package and compile it.</p>
+  <section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h1>
+<p>In order to stream data through the ROS middleware, install MVN Studio software to stream the data from a Windows computer. An Linux Ubuntu client computer is required to receive the streamed data and publish it to a ROS network.</p>
+<section id="server-microsoft-windows-computer">
+<h2>Server (Microsoft Windows computer)<a class="headerlink" href="#server-microsoft-windows-computer" title="Permalink to this heading"></a></h2>
+<p>Open the MVN Studio 2023 software on your Windows computer and prepare the server software as described in the setup section of this guide.</p>
+</section>
+<section id="client-linux-ubuntu-computer">
+<h2>Client (Linux Ubuntu computer)<a class="headerlink" href="#client-linux-ubuntu-computer" title="Permalink to this heading"></a></h2>
+<p>Before start the client, set it up as described in the setup section of this guide.</p>
 <ol class="arabic">
-<li><p>Create a catkin workspace and change directory to the source code:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>path_to_catkin_ws/src
-<span class="nb">cd</span><span class="w"> </span>path_to_catkin_ws/src
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-<li><p>Clone the xsens_mvn_ros repository:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/hrii-iit/xsens_mvn_ros.git<span class="w"> </span>--recursive
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-<li><p>Build your catkin workspace</p>
+<li><p>Change directory to your workspace and source the setup.bash on your workspace devel folder:</p>
 <blockquote>
 <div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>path_to_catkin_ws
-catkin<span class="w"> </span>build
+<span class="nb">source</span><span class="w"> </span>devel/setup.bash
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Run the launch file as following:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reset<span class="p">;</span><span class="w"> </span>ros<span class="w"> </span>launch<span class="w"> </span>xsens_mvn_ros<span class="w"> </span>xsens_client.launch
 </pre></div>
 </div>
 </div></blockquote>
@@ -128,8 +112,8 @@ catkin<span class="w"> </span>build
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="server/usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="kinematic_chain.html" class="btn btn-neutral float-right" title="Kinematic Chain" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="setup.html" class="btn btn-neutral float-left" title="Setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kinematic_chain.html" class="btn btn-neutral float-right" title="Skeleton indexes and names" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

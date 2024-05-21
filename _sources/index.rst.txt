@@ -10,12 +10,12 @@ Welcome to xsens_mvn_ros documentation!
    :maxdepth: 2
    :caption: Contents:
 
-Indices and tables
-==================
+.. Indices and tables
+.. ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. * :ref:`genindex`
+.. * :ref:`modindex`
+.. * :ref:`search`
 
 .. note::
 
@@ -24,14 +24,10 @@ Indices and tables
 Contents
 --------
 
-xsens_mvn_ros contains the relevant packages for the sxens software development tools (alongside with the ROS middleware). 
+`xsens_mvn_ros <https://github.com/hrii-iit/xsens_mvn_ros>`_ contains the relevant packages for the Xsens software development tools (alongside with the ROS middleware). 
 
 .. toctree::
 
-   installation
-   build
+   setup
+   usage
    kinematic_chain
-
-.. todolist::¶
-
-   list of things to do
