@@ -1,18 +1,16 @@
-Kinematic Chain
-===============
+Skeleton indexes and names
+==========================
 
-Kinematics chain
-----------------
+This document contains the list of the joint and link indexes and names.
 
+TODO: 
 
-Indexes
--------
+#. mention hand joints and links
+#. add the kinematic chain
 
-TODO mention hand joints and links
+Joints
+------
 
-- [Kinematics chain: indexes and definition](#definitions)
-
-Joint indexes and names:
   - 0) <prefix>c1_head_x
   - 1) <prefix>c1_head_y
   - 2) <prefix>c1_head_z
@@ -80,7 +78,9 @@ Joint indexes and names:
   - 64) <prefix>t9_t8_y
   - 65) <prefix>t9_t8_z
 
-Link indexes and names:
+Links
+-----
+
   - 0) <prefix>base_link
   - 1) <prefix>pelvis
   - 2) <prefix>l5
